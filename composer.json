@@ -1,0 +1,11 @@
+{
+    "name": "teca/ramverk1-project",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Teo Carlsson",
+            "email": "carlsson.teo@gmail.com"
+        }
+    ],
+    "require": {}
+}
