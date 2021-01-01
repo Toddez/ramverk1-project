@@ -7,25 +7,25 @@ jobs:
         steps:
             - checkout
 
-            - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-            - run: sudo docker-php-ext-install zip
+            - run:
+                name: Install dependencies
+                command: |
+                    sudo apt update
+                    sudo docker-php-ext-install zip
+                    sudo apt-get install sqlite3
+                    sudo apt-get install php7.3-sqlite
+                    curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+                    chmod +x ./cc-test-reporter
 
-            # Setup Code Climate test-reporter
-            - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-            - run: chmod +x ./cc-test-reporter
-
-            - run: sudo apt-get install sqlite3
-            - run: sudo apt-get install php7.3-sqlite
-
-            # Create database
-            #- run: sqlite3 data/test_placeholder.sqlite < sql/ddl/test_sqlite.sql
-            #- run: chmod 666 data/test_placeholder.sqlite
+            #- run:
+            #    name: Setup test database
+            #    command: |
+            #        sqlite3 data/test_placeholder.sqlite < sql/ddl/test_sqlite.sql
+            #        chmod 666 data/test_placeholder.sqlite
 
             - restore_cache:
                 keys:
-                # "composer.lock" can be used if it is committed to the repo
                 - v1-dependencies-{{ checksum "composer.json" }}
-                # fallback to using the latest cache if no exact match is found
                 - v1-dependencies-
 
             - run: make install
@@ -35,7 +35,9 @@ jobs:
                 paths:
                     - ./vendor
 
-            - run: make check
-            - run: ./cc-test-reporter before-build
-            - run: make test
-            - run: ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
+            - run:
+                name: Run tests
+                command: |
+                    ./cc-test-reporter before-build
+                    make test
+                    ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
