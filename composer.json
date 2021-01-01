@@ -1,5 +1,7 @@
 {
     "name": "teca/ramverk1-project",
+    "description": "Project for course ramverk1",
+    "license": "MIT",
     "type": "project",
     "authors": [
         {
