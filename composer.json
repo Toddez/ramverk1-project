@@ -7,5 +7,7 @@
             "email": "carlsson.teo@gmail.com"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {}
 }
