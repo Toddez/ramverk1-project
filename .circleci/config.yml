@@ -10,6 +10,10 @@ jobs:
             - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
             - run: sudo docker-php-ext-install zip
 
+            # Setup Code Climate test-reporter
+            - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+            - run: chmod +x ./cc-test-reporter
+
             - run: sudo apt-get install sqlite3
             - run: sudo apt-get install php7.3-sqlite
 
@@ -32,4 +36,6 @@ jobs:
                     - ./vendor
 
             - run: make check
+            - run: ./cc-test-reporter before-build
             - run: make test
+            - run: ./cc-test-reporter after-build --coverage-input-type clover --exit-code $?
