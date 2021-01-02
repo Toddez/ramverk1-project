@@ -12,6 +12,7 @@ return [
             "stylesheets" => [
                 "css/normalize.css",
                 "css/base.css",
+                "css/layout.css",
                 "css/style.css",
             ],
         ],
