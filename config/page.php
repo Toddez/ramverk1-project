@@ -11,6 +11,7 @@ return [
             "lang" => "sv",
             "stylesheets" => [
                 "css/normalize.css",
+                "css/base.css",
                 "css/style.css",
             ],
         ],
