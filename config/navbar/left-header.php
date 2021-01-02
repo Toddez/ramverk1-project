@@ -2,7 +2,7 @@
 
 return [
     "wrapper" => null,
-    "class" => "my-navbar rm-default rm-desktop",
+    "class" => "left-navbar",
  
     "items" => [
         [
@@ -12,7 +12,7 @@ return [
         ],
         [
             "text" => "Om",
-            "url" => "om",
+            "url" => "about",
             "title" => "Om denna webbplats.",
         ],
     ],

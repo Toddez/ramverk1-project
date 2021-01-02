@@ -32,7 +32,14 @@ return [
             "region" => "header-col-2",
             "template" => "anax/v2/navbar/navbar_submenus",
             "data" => [
-                "navbarConfig" => require __DIR__ . "/navbar/header.php",
+                "navbarConfig" => require __DIR__ . "/navbar/left-header.php",
+            ],
+        ],
+        [
+            "region" => "header-col-3",
+            "template" => "anax/v2/navbar/navbar_submenus",
+            "data" => [
+                "navbarConfig" => require __DIR__ . "/navbar/right-header.php",
             ],
         ],
         [
