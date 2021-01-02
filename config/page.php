@@ -6,7 +6,7 @@ return [
         "data" => [
             "baseTitle" => " | project",
             "bodyClass" => null,
-            "favicon" => "favicon.ico",
+            "favicon" => "img/logo.svg",
             "htmlClass" => null,
             "lang" => "sv",
             "stylesheets" => [
@@ -23,7 +23,7 @@ return [
             "data" => [
                 "homeLink"      => "",
                 "siteLogoText"  => "project",
-                "siteLogoTextIcon" => "image/logo.png",
+                "siteLogoTextIcon" => "img/logo.svg",
                 "siteLogoTextIconAlt" => "logo",
             ],
         ],
