@@ -18,7 +18,7 @@ Install dependencies
 ## Setup database
 
 Create tables  
-``sqlite3 data/db.sql < sql/ddl/db_sqlite.sql``
+``sqlite3 data/db.sqlite < sql/ddl/db_sqlite.sql``
 
 Set permissions  
 ``chmod 666 data/db.sqlite``
