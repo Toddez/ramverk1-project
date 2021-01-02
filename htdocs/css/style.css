@@ -39,12 +39,14 @@
     max-height: 75px;
 }
 
-.region-header-col-2 > .rm-navbar {
+.region-header-col-2 > .rm-navbar,
+.region-header-col-3 > .rm-navbar {
     height: 75px;
     padding: 0;
 }
 
-.region-header-col-2 ul {
+.region-header-col-2 ul,
+.region-header-col-3 ul {
     padding: 0;
     margin: 0;
     display: flex;
@@ -54,8 +56,17 @@
     height: 75px;
 }
 
-.region-header-col-2 ul > li {
+.region-header-col-2 ul > li,
+.region-header-col-3 ul > li {
     margin: 0 0.5rem;
+}
+
+.region-header-col-3 {
+    width: 100%;
+}
+
+.region-header-col-3 ul {
+    justify-content: flex-end;
 }
 
 /*
