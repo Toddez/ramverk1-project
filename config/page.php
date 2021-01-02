@@ -10,7 +10,8 @@ return [
             "htmlClass" => null,
             "lang" => "sv",
             "stylesheets" => [
-                "css/style.min.css",
+                "css/normalize.css",
+                "css/style.css",
             ],
         ],
     ],
