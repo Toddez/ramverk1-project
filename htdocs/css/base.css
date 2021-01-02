@@ -36,6 +36,15 @@ html {
     overflow-x: hidden;
 }
 
+body {
+    min-height: 100vh;
+    overflow: hidden;
+    background-color: var(--color-background1);
+    color: var(--color-foreground1);
+}
+
+
+a::selection,
 img::selection {
     background: transparent;
 }
@@ -48,7 +57,7 @@ img::selection {
 }
 
 a {
-    color: var(--color-foreground2);
+    color: var(--color-accent1);
     text-decoration: none;
     cursor: pointer;
 }
@@ -62,11 +71,4 @@ a:hover {
     text-decoration: underline;
     opacity: 1;
     color: var(--color-foreground0);
-}
-
-body {
-    min-height: 100vh;
-    overflow: hidden;
-    background-color: var(--color-background1);
-    color: var(--color-foreground1);
 }
