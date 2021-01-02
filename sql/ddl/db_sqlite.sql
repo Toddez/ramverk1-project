@@ -12,7 +12,10 @@ CREATE TABLE Users (
 DROP TABLE IF EXISTS Post;
 CREATE TABLE Post (
     "id" INTEGER PRIMARY KEY NOT NULL,
-    "parent" INTEGER DEFAULT NULL,
+    "author" INTEGER NOT NULL,
+    "type" INTEGER NOT NULL,
+    "thread" INTEGER DEFAULT NULL,
+    "parent" INTEGER,
     "creation" DATETIME DEFAULT (DATETIME('now')),
     "answer" BOOLEAN DEFAULT FALSE
 );
