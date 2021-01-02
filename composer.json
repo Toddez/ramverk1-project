@@ -9,6 +9,11 @@
             "email": "carlsson.teo@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "Teca\\": "src/"
+        }
+    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
