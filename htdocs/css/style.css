@@ -1,100 +1,28 @@
-/*
-* Body
-*/
-.wrap-all {
-    width: 100vw;
-    min-height: 100vh;
-    max-width: 1200px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    overflow: hidden;
-}
-
-/*
-* Header
-*/
-.region-header {
-    display: flex;
-    flex-direction: row;
-    height: 75px;
-    justify-content: left;
-    align-items: left;
-}
-
-.region-header-col-1 {
-    display: flex;
-    flex-direction: row;
-}
-
-.site-logo-text > a {
-    height: 75px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-right: 1.5rem;
-}
-
-.site-logo-text img {
-    max-height: 75px;
-}
-
-.region-header-col-2 > .rm-navbar,
-.region-header-col-3 > .rm-navbar {
-    height: 75px;
+form > fieldset {
+    border: 0;
     padding: 0;
 }
 
-.region-header-col-2 ul,
-.region-header-col-3 ul {
+form .validation-message {
     padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    list-style: none;
-    align-items: center;
-    height: 75px;
+    list-style-position: inside;
+    color: var(--color-danger);
 }
 
-.region-header-col-2 ul > li,
-.region-header-col-3 ul > li {
-    margin: 0 0.5rem;
-}
-
-.region-header-col-3 {
+form input {
+    background-color: var(--color-foreground1);
+    border: 0;
+    border-radius: 2px;
+    padding: 0.5rem;
     width: 100%;
 }
 
-.region-header-col-3 ul {
-    justify-content: flex-end;
-}
-
-/*
-* Content
-*/
-.outer-wrap-main {
-    padding: 1rem;
-    min-height: calc(100vh - 175px - 2rem);
-}
-
-/*
-* Footer
-*/
-.outer-wrap-footer {
-    border-top: 2px solid var(--color-border1);
-    min-height: 75px;
-    max-height: 100px;
-    width: 100%;
-    max-width: 100vw;
-    height: 15vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    margin-top: 2rem;
-}
-
-.inner-wrap-footer .block > p {
-    text-align: center;
+.login-wrap {
+    position: absolute;
+    width: 600px;
+    max-width: 100%;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -50%);
+    padding: 0.5rem;
 }
