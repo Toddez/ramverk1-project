@@ -15,6 +15,14 @@ Clone
 Install dependencies  
 ``make install``
 
+## Setup database
+
+Create tables  
+``sqlite3 data/db.sql < sql/ddl/db_sqlite.sql``
+
+Set permissions  
+``chmod 666 data/db.sqlite``
+
 ## Testing
 
 Run entire test suite  
