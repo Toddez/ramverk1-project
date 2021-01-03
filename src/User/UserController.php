@@ -4,8 +4,10 @@ namespace Teca\User;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Teca\User\HTMLForm\ProfileForm;
 use Teca\User\HTMLForm\LoginForm;
 use Teca\User\HTMLForm\RegisterForm;
+use Teca\User\User;
 
 class UserController implements ContainerInjectableInterface
 {
@@ -13,14 +15,15 @@ class UserController implements ContainerInjectableInterface
 
     public function indexAction() : object
     {
-        // TODO: Redirect to login if not logged in
-        // TODO: Redirect to profile if logged in
+        if (!User::authorized($this->di)) {
+            $this->di->get("response")->redirect("user/login")->send();
+        }
 
         $page = $this->di->get("page");
-        $form = new LoginForm($this->di);
+        $form = new ProfileForm($this->di);
         $form->check();
 
-        $page->add("user/login", [
+        $page->add("user/profile", [
             "form" => $form->getHTML(),
         ]);
 
@@ -29,8 +32,18 @@ class UserController implements ContainerInjectableInterface
         ]);
     }
 
+    public function logoutAction() : object
+    {
+        User::logout($this->di);
+        $this->di->get("response")->redirect("user")->send();
+    }
+
     public function loginAction() : object
     {
+        if (User::authorized($this->di)) {
+            $this->di->get("response")->redirect("user")->send();
+        }
+
         $page = $this->di->get("page");
         $form = new LoginForm($this->di);
         $form->check();
@@ -46,6 +59,10 @@ class UserController implements ContainerInjectableInterface
 
     public function registerAction() : object
     {
+        if (User::authorized($this->di)) {
+            $this->di->get("response")->redirect("user")->send();
+        }
+
         $page = $this->di->get("page");
         $form = new RegisterForm($this->di);
         $form->check();
