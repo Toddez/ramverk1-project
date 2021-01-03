@@ -21,8 +21,18 @@ class ThreadController implements ContainerInjectableInterface
         $post->setDb($this->di->get("dbqb"));
         $threads = $post->findAllWhere("type = ?", PostType::THREAD);
 
-        $date = array_column($threads, 'creation');
-        array_multisort($date, SORT_ASC, $threads);
+        $authors = array_unique(array_column($threads, 'author'));
+        $user = new user();
+        $user->setDb($this->di->get("dbqb"));
+        $users = $user->findAllWhere("id IN (?)", [$authors]);
+
+        foreach ($threads as $thread) {
+            $id = intval($thread->author) - 1;
+            $thread->authorName = $users[$id]->name;
+        }
+
+        $creationDates = array_column($threads, 'creation');
+        array_multisort($creationDates, SORT_DESC, $threads);
 
         $page->add("post/threads", [
             "threads" => $threads,
