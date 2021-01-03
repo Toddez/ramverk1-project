@@ -7,30 +7,32 @@ if ($authorized) { ?>
 <?php } ?>
 
 <div class="threads">
+    <?php foreach ($threads as $thread) : ?>
     <div class="thread">
         <div class="left">
             <div class="score">
-                <span class="number">570</span>
+                <span class="number">tmp</span>
                 <span>röster</span>
             </div>
             <div class="answers">
-                <span class="number">12</span>
+                <span class="number">tmp</span>
                 <span>svar</span>
             </div>
         </div>
         <div class="right">
             <div class="content">
-                <a class="title">Q: Hur gör man x?</a>
-                <div class="snippet">Jag försökte göra y, men jag stötte på ett problem då...</div>
+                <a class="title" href="thread/view/<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
+                <div class="snippet"><?= htmlentities($thread->content) ?></div>
             </div>
             <div class="details">
                 <div class="tags">
-                    <a class="tag">Första</a>
-                    <a class="tag">Enkel</a>
+                    <a class="tag">tmp</a>
+                    <a class="tag">tmp</a>
                 </div>
-                <div class="date">Jan 1 '21</div>
-                <a class="name">User</a>
+                <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
+                <a class="name" href="user/view/<?= $thread->author ?>"><?= htmlentities($thread->author) ?></a>
             </div>
         </div>
     </div>
+    <?php endforeach; ?>
 </div>
