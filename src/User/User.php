@@ -43,9 +43,19 @@ class User extends ActiveRecordModel
         $session = $di->get("session");
 
         if ($session->get("authorized", false)) {
+            $user = new User();
+            $user->setDb($di->get("dbqb"));
+            $user->find("name", $session->get("user"));
+
+            if (!$user->id) {
+                User::logout($di);
+                return false;
+            }
+
             return true;
         }
 
+        User::logout($di);
         return false;
     }
 
