@@ -24,6 +24,12 @@ class User extends ActiveRecordModel
         return password_verify($password, $this->password);
     }
 
+    public function gravatar($size = 200) : string
+    {
+        $hash = md5(strtolower(trim( $this->avatar)));
+        return "https://www.gravatar.com/avatar/" . $hash . "?s=" . $size . "&d=identicon";
+    }
+
     public function login($di)
     {
         $session = $di->get("session");
