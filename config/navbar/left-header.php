@@ -7,7 +7,7 @@ return [
     "items" => [
         [
             "text" => "Frågor",
-            "url" => "questions",
+            "url" => "threads",
             "title" => "Samtliga frågor.",
         ],
         [
