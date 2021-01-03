@@ -38,9 +38,10 @@ return [
         ],
         [
             "region" => "header-col-3",
-            "template" => "anax/v2/navbar/navbar_submenus",
+            "template" => "navbar",
             "data" => [
-                "navbarConfig" => require __DIR__ . "/navbar/right-header.php",
+                "auth" => require __DIR__ . "/navbar/right-header-auth.php",
+                "noauth" => require __DIR__ . "/navbar/right-header.php",
             ],
         ],
         [

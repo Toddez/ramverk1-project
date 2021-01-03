@@ -6,9 +6,9 @@ return [
  
     "items" => [
         [
-            "text" => "Användare",
+            "text" => "Logga in",
             "url" => "user",
-            "title" => "Konfiguration av användare.",
+            "title" => "Logga in användare.",
         ],
     ],
 ];
