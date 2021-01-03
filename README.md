@@ -21,7 +21,10 @@ Create tables
 ``sqlite3 data/db.sqlite < sql/ddl/db_sqlite.sql``
 
 Set permissions  
-``chmod 666 data/db.sqlite``
+``chmod 666 data/db.sqlite``  
+
+May require ``data/`` to have write perms as well  
+``chmod a+w data/``
 
 ## Testing
 
