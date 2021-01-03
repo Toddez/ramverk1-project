@@ -1,8 +1,10 @@
 <?php
+$user = new \Teca\User\User();
+$authorized = $user->authorized($di);
 
-?>
-
-<a href="threads/new">Ny fråga</a>
+if ($authorized) { ?>
+    <a href="threads/new">Ny fråga</a>
+<?php } ?>
 
 <div class="threads">
     <div class="thread">
