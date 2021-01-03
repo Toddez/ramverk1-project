@@ -4,6 +4,7 @@ namespace Teca\User\HTMLForm;
 
 use Anax\HTMLForm\FormModel;
 use Psr\Container\ContainerInterface;
+use Teca\User\User;
 
 class LoginForm extends FormModel
 {
@@ -37,12 +38,26 @@ class LoginForm extends FormModel
 
     public function callbackSubmit() : bool
     {
-        // TODO: Check user info with database
-        return false;
+        $name = $this->form->value("name");
+        $password = $this->form->value("password");
+
+        $user = new User();
+        $user->setDb($this->di->get("dbqb"));
+
+        $authorized = $user->verifyPassword($name, $password);
+
+        if (!$authorized) {
+            $this->form->rememberValues();
+            $this->form->addOutput("Användarnamn eller lösenord matchar inte.", "bad");
+            return false;
+        }
+
+        $user->login($this->di);
+        return true;
     }
 
     public function callbackSuccess()
     {
-        // TODO: Redirect to profile
+        $this->di->get("response")->redirect("user")->send();
     }
 }
