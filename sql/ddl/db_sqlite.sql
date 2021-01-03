@@ -18,7 +18,7 @@ CREATE TABLE Post (
     "type" INTEGER NOT NULL,
     "thread" INTEGER DEFAULT NULL,
     "parent" INTEGER,
-    "creation" DATETIME DEFAULT (DATETIME('now')),
+    "creation" DATETIME NOT NULL,
     "answer" BOOLEAN DEFAULT FALSE
 );
 
