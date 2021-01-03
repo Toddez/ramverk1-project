@@ -66,6 +66,7 @@ class RegisterForm extends FormModel
         }
 
         $user->name = $name;
+        $user->avatar = $name;
         $user->setPassword($password);
         $user->save();
         $user->login($this->di);
