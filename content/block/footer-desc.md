@@ -1,1 +1,1 @@
-Denna sidan används för utbildningsändamål i kursen jsramverk på [Blekinge Tekniska Högskola](https://bth.se)
+Denna sidan används för utbildningsändamål i kursen *ramverk1* på [Blekinge Tekniska Högskola](https://bth.se)
