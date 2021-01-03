@@ -6,14 +6,24 @@ return [
  
     "items" => [
         [
-            "text" => "Hem",
-            "url" => "",
-            "title" => "Start sidan.",
+            "text" => "Frågor",
+            "url" => "questions",
+            "title" => "Samtliga frågor.",
+        ],
+        [
+            "text" => "Taggar",
+            "url" => "tags",
+            "title" => "Samtliga taggar.",
+        ],
+        [
+            "text" => "Användare",
+            "url" => "users",
+            "title" => "Samtliga användare.",
         ],
         [
             "text" => "Om",
             "url" => "about",
-            "title" => "Om denna webbplats.",
+            "title" => "Om sidan.",
         ],
     ],
 ];
