@@ -13,6 +13,8 @@ DROP TABLE IF EXISTS Post;
 CREATE TABLE Post (
     "id" INTEGER PRIMARY KEY NOT NULL,
     "author" INTEGER NOT NULL,
+    "title" TEXT,
+    "content" TEXT,
     "type" INTEGER NOT NULL,
     "thread" INTEGER DEFAULT NULL,
     "parent" INTEGER,

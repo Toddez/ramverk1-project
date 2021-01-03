@@ -10,6 +10,8 @@ class Post extends ActiveRecordModel
 
     public $id;
     public $author;
+    public $title;
+    public $content;
     public $type;
     public $thread;
     public $parent;
