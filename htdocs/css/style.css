@@ -3,10 +3,22 @@ form > fieldset {
     padding: 0;
 }
 
-form .validation-message {
+form .validation-message,
+form output.bad {
     padding: 0;
     list-style-position: inside;
     color: var(--color-danger);
+}
+
+form output.good {
+    padding: 0;
+    list-style-position: inside;
+    color: var(--color-accent4);
+}
+
+form fieldset > ul {
+    margin-top: -0.5rem;
+    margin-bottom: 1.5rem;
 }
 
 form input {
