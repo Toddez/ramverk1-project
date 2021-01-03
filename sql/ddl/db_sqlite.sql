@@ -1,7 +1,7 @@
 
--- Table Users
-DROP TABLE IF EXISTS Users;
-CREATE TABLE Users (
+-- Table User
+DROP TABLE IF EXISTS User;
+CREATE TABLE User (
     "id" INTEGER PRIMARY KEY NOT NULL,
     "name" TEXT NOT NULL,
     "password" TEXT NOT NULL,
