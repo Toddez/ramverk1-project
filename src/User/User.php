@@ -26,7 +26,7 @@ class User extends ActiveRecordModel
 
     public function gravatar($size = 200) : string
     {
-        $hash = md5(strtolower(trim( $this->avatar)));
+        $hash = md5(strtolower(trim($this->avatar)));
         return "https://www.gravatar.com/avatar/" . $hash . "?s=" . $size . "&d=identicon";
     }
 
@@ -37,14 +37,14 @@ class User extends ActiveRecordModel
         $session->set("user", $this->name);
     }
 
-    static function logout($di)
+    public static function logout($di)
     {
         $session = $di->get("session");
         $session->set("authorized", false);
         $session->delete("user");
     }
 
-    static function authorized($di) : bool
+    public static function authorized($di) : bool
     {
         $session = $di->get("session");
 
@@ -65,7 +65,7 @@ class User extends ActiveRecordModel
         return false;
     }
 
-    static function currentUser($di) : User
+    public static function currentUser($di) : User
     {
         $session = $di->get("session");
 
