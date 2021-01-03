@@ -37,46 +37,40 @@ class User extends ActiveRecordModel
         $session->set("user", $this->name);
     }
 
-    public static function logout($di)
+    public function logout($di)
     {
         $session = $di->get("session");
         $session->set("authorized", false);
         $session->delete("user");
     }
 
-    public static function authorized($di) : bool
+    public function authorized($di) : bool
     {
         $session = $di->get("session");
 
         if ($session->get("authorized", false)) {
-            $user = new User();
-            $user->setDb($di->get("dbqb"));
-            $user->find("name", $session->get("user"));
+            $this->setDb($di->get("dbqb"));
+            $this->find("name", $session->get("user"));
 
-            if (!$user->id) {
-                User::logout($di);
+            if (!$this->id) {
+                $this->logout($di);
                 return false;
             }
 
             return true;
         }
 
-        User::logout($di);
+        $this->logout($di);
         return false;
     }
 
-    public static function currentUser($di) : User
+    public function currentUser($di)
     {
         $session = $di->get("session");
 
-        if (User::authorized($di)) {
-            $user = new User();
-            $user->setDb($di->get("dbqb"));
-            $user->find("name", $session->get("user"));
-
-            return $user;
+        if ($this->authorized($di)) {
+            $this->setDb($di->get("dbqb"));
+            $this->find("name", $session->get("user"));
         }
-
-        return new User();
     }
 }

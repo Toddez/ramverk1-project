@@ -10,7 +10,8 @@ class ProfileForm extends FormModel
 {
     public function __construct(ContainerInterface $di)
     {
-        $user = User::currentUser($di);
+        $user = new User();
+        $user->currentUser($di);
 
         parent::__construct($di);
         $this->form->create(
@@ -37,7 +38,8 @@ class ProfileForm extends FormModel
     {
         $avatar = $this->form->rawValue("avatar");
 
-        $user = User::currentUser($this->di);
+        $user = new User();
+        $user->currentUser($this->di);
         $user->avatar = $avatar;
         $user->save();
 

@@ -15,7 +15,8 @@ class UserController implements ContainerInjectableInterface
 
     public function indexAction() : object
     {
-        if (!User::authorized($this->di)) {
+        $user = new User();
+        if (!$user->authorized($this->di)) {
             $this->di->get("response")->redirect("user/login")->send();
         }
 
@@ -34,13 +35,15 @@ class UserController implements ContainerInjectableInterface
 
     public function logoutAction() : object
     {
-        User::logout($this->di);
+        $user = new User();
+        $user->logout($this->di);
         $this->di->get("response")->redirect("user")->send();
     }
 
     public function loginAction() : object
     {
-        if (User::authorized($this->di)) {
+        $user = new User();
+        if ($user->authorized($this->di)) {
             $this->di->get("response")->redirect("user")->send();
         }
 
@@ -59,7 +62,8 @@ class UserController implements ContainerInjectableInterface
 
     public function registerAction() : object
     {
-        if (User::authorized($this->di)) {
+        $user = new User();
+        if ($user->authorized($this->di)) {
             $this->di->get("response")->redirect("user")->send();
         }
 
