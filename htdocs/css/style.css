@@ -56,7 +56,6 @@ form textarea {
 
 .threads > .thread {
     width: 100%;
-    max-width: 700px;
     display: flex;
     flex-direction: row;
     border-top: 1px solid var(--color-border0);
