@@ -16,16 +16,24 @@ CREATE TABLE Post (
     "title" TEXT,
     "content" TEXT,
     "type" INTEGER NOT NULL,
+    "tags" TEXT,
     "thread" INTEGER DEFAULT NULL,
     "parent" INTEGER,
     "creation" DATETIME NOT NULL,
     "answer" BOOLEAN DEFAULT FALSE
 );
 
--- Table Votes
+-- Table Vote
 DROP TABLE IF EXISTS Vote;
 CREATE TABLE Vote (
     "user" INTEGER NOT NULL,
     "post" INTEGER NOT NULL,
     "value" INTEGER NOT NULL
-)
+);
+
+-- Table Tag
+DROP TABLE IF EXISTS Tag;
+CREATE TABLE Tag (
+    "id" INTEGER PRIMARY KEY NOT NULL,
+    "value" TEXT NOT NULL
+);
