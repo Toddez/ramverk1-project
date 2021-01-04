@@ -139,13 +139,12 @@ form textarea {
     padding-right: 1rem;
 }
 
-.thread.inspect > .right > .details > .date {
-    width: auto;
-    text-align: left;
- }
+.thread.inspect > .right > .details {
+    align-items: center;
+}
 
 .thread.inspect > .right > .comments {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
     display: flex;
     flex-direction: column;
 }
@@ -170,4 +169,14 @@ form textarea {
     opacity: 0.8;
     color: var(--color-accent2);
     padding: 0.5rem;
+}
+
+.date {
+    opacity: 0.8;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
 }
