@@ -29,9 +29,13 @@ class ThreadController implements ContainerInjectableInterface
         $users = $user->findAllWhere("id IN (?)", [$authors]);
 
         foreach ($threads as $thread) {
-            $id = intval($thread->author) - 1;
-            $thread->authorName = $users[$id]->name;
+            $id = $thread->author;
+            foreach ($users as $author) {
+                if ($author->id === $id) {
+                    $thread->authorName = $author->name;
                 }
+            }
+        }
 
         $creationDates = array_column($threads, 'creation');
         array_multisort($creationDates, SORT_DESC, $threads);
