@@ -9,7 +9,7 @@ function comments($parent)
             <?php foreach ($parent->comments as $comment) : ?>
             <div class="comment">
                 <div class="left">
-                    <span class="votes">tmp</span>
+                    <span class="votes"><?= $parent->voteCount ?></span>
                 </div>
                 <div class="right">
                     <span class="content"><?= htmlentities($comment->content) ?> - </span>
@@ -26,26 +26,27 @@ function comments($parent)
 <div class="thread inspect">
     <div class="left">
         <div class="score">
-            <span class="number">tmp</span>
+            <span class="number"><?= $thread->voteCount ?></span>
             <span>röster</span>
         </div>
         <div class="answers">
-            <span class="number">tmp</span>
+            <span class="number"><?= $thread->answerCount ?></span>
             <span>svar</span>
         </div>
     </div>
     <div class="right">
         <a class="title" href="<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
-        <div class="details">
-            <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
-            <a class="name" href="../../user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
-        </div>
         <div class="content">
             <?= htmlentities($thread->content) ?>
         </div>
         <div class="tags">
             <a class="tag">tmp</a>
             <a class="tag">tmp</a>
+        </div>
+        <div class="details">
+            <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
+            <a class="name" href="../../user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
+            <img class="avatar" src="<?= $thread->authorAvatar ?>">
         </div>
         <?= comments($thread) ?>
         <a class="addComment" href="../comment/<?= $thread->id ?>/<?= $thread->id ?>">Lägg till en kommentar</a>
@@ -57,7 +58,7 @@ function comments($parent)
     <div class="answer thread inspect">
         <div class="left">
             <div class="score">
-                <span class="number">tmp</span>
+                <span class="number"><?= $answer->voteCount ?></span>
                 <span>röster</span>
             </div>
         </div>
@@ -66,6 +67,7 @@ function comments($parent)
             <div class="details">
                 <div class="date"><?= date("H:i F j 'y", $answer->creation) ?></div>
                 <a class="name" href="../../user/view/<?= $answer->author ?>"><?= htmlentities($answer->authorName) ?></a>
+                <img class="avatar" src="<?= $answer->authorAvatar ?>">
             </div>
             <?= comments($answer) ?>
             <a class="addComment" href="../comment/<?= $thread->id ?>/<?= $answer->id ?>">Lägg till en kommentar</a>
