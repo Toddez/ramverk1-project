@@ -7,6 +7,7 @@ use Psr\Container\ContainerInterface;
 use Teca\User\User;
 use Teca\Post\Post;
 use Teca\Post\PostType;
+use Teca\Tag\Tag;
 
 class NewThreadForm extends FormModel
 {
@@ -55,6 +56,7 @@ class NewThreadForm extends FormModel
     {
         $title = $this->form->value("title");
         $content = $this->form->value("content");
+        $tags = explode(',', $this->form->value("tags"));
 
         $user = new User();
         $user->currentUser($this->di);
@@ -63,12 +65,36 @@ class NewThreadForm extends FormModel
             return false;
         }
 
+        $tag = new Tag();
+        $tag->setDb($this->di->get("dbqb"));
+        $existingTags = $tag->findAllWhere("value IN (?)", [$tags]);
+
+        $tagIds = array_unique(array_column($existingTags, 'id'));
+        foreach ($tags as $searchTag) {
+            $exists = false;
+            foreach ($existingTags as $existingTag) {
+                if ($existingTag->value === $searchTag) {
+                    $exists = true;
+                }
+            }
+
+            if (!$exists) {
+                $tag = new Tag();
+                $tag->setDb($this->di->get("dbqb"));
+                $tag->value = $searchTag;
+                $tag->save();
+
+                $tagIds[] = $tag->id;
+            }
+        }
+
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $post->author = $user->id;
         $post->title = $title;
         $post->content = $content;
         $post->type = PostType::THREAD;
+        $post->tags = implode(",", $tagIds);
         $post->creation = time();
         $post->save();
 
