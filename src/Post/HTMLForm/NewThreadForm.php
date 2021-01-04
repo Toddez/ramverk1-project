@@ -72,6 +72,6 @@ class NewThreadForm extends FormModel
 
     public function callbackSuccess()
     {
-        $this->di->get("response")->redirect("thread/view/" . $this->id);
+        $this->di->get("response")->redirect("threads/view/" . $this->id);
     }
 }
