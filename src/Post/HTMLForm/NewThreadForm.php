@@ -23,17 +23,24 @@ class NewThreadForm extends FormModel
             [
                 "title" => [
                     "type" => "text",
-                    "label" => "Titel",
+                    "label" => "Fråga",
+                    "placeholder" => "Hur gör jag x?",
                     "validation" => [
                         "not_empty"
                     ],
                 ],
                 "content" => [
                     "type" => "textarea",
-                    "label" => "Fråga",
+                    "label" => "Beskrivning",
+                    "placeholder" => "Längre beskrivning av problemet/frågan...",
                     "validation" => [
                         "not_empty"
                     ],
+                ],
+                "tags" => [
+                    "type" => "text",
+                    "label" => "Taggar (separera med kommatecken)",
+                    "placeholder" => "regex,pandas,arrays,...",
                 ],
                 "submit" => [
                     "type" => "submit",
