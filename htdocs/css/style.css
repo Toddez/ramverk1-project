@@ -139,7 +139,7 @@ form textarea {
     padding-right: 1rem;
 }
 
-.thread.inspect > .right > .details {
+.thread > .right > .details {
     align-items: center;
 }
 
