@@ -32,6 +32,7 @@ if ($authorized) { ?>
                 </div>
                 <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
                 <a class="name" href="user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
+                <img class="avatar" src="<?= $thread->authorAvatar ?>">
             </div>
         </div>
     </div>
