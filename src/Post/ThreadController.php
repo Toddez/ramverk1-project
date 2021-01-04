@@ -11,6 +11,7 @@ use Teca\User\User;
 use Teca\Post\Post;
 use Teca\Post\PostType;
 use Teca\Vote\Vote;
+use Teca\Tag\Tag;
 
 class ThreadController implements ContainerInjectableInterface
 {
@@ -30,16 +31,23 @@ class ThreadController implements ContainerInjectableInterface
         $users = $user->findAllWhere("id IN (?)", [$authors]);
 
         $threadIds = array_unique(array_column($threads, 'id'));
+        $tagIds = array_unique(explode(",", implode(",", array_column($threads, "tags"))));
+
         $answers = $post->findAllWhere("thread IN (?) AND type = ?", [$threadIds, PostType::ANSWER]);
 
         $vote = new Vote();
         $vote->setDb($this->di->get("dbqb"));
         $votes = $vote->findAllWhere("post IN (?)", [$threadIds]);
 
+        $tag = new Tag();
+        $tag->setDb($this->di->get("dbqb"));
+        $tags = $tag->findAllWhere("id IN (?)", [$tagIds]);
+
         foreach ($threads as $thread) {
             $id = $thread->author;
             $thread->answerCount = 0;
             $thread->voteCount = 0;
+            $thread->tagValues = [];
             foreach ($users as $author) {
                 if ($author->id === $id) {
                     $thread->authorName = $author->name;
@@ -55,6 +63,12 @@ class ThreadController implements ContainerInjectableInterface
             foreach ($votes as $vote) {
                 if (intval($vote->post) === intval($thread->id)) {
                     $thread->voteCount += intval($vote->value);
+                }
+            }
+
+            foreach ($tags as $tag) {
+                if (in_array($tag->id, explode(",", $thread->tags))) {
+                    $thread->tagValues[] = $tag;
                 }
             }
         }
@@ -146,6 +160,14 @@ class ThreadController implements ContainerInjectableInterface
         foreach ($votes as $vote) {
             $thread->voteCount += intval($vote->value);
         }
+
+        $tagIds = explode(",", $thread->tags);
+
+        $tag = new Tag();
+        $tag->setDb($this->di->get("dbqb"));
+        $tags = $tag->findAllWhere("id IN (?)", [$tagIds]);
+
+        $thread->tagValues = $tags;
 
         $user = new user();
         $user->setDb($this->di->get("dbqb"));
