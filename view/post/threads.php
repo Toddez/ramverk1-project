@@ -26,8 +26,9 @@ if ($authorized) { ?>
             </div>
             <div class="details">
                 <div class="tags">
-                    <a class="tag">tmp</a>
-                    <a class="tag">tmp</a>
+                    <?php foreach ($thread->tagValues as $tag) : ?>
+                    <a class="tag" href="tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
+                    <?php endforeach; ?>
                 </div>
                 <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
                 <a class="name" href="user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
