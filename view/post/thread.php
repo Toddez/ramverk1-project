@@ -41,7 +41,7 @@ function comments($parent)
         </div>
         <div class="tags">
             <?php foreach ($thread->tagValues as $tag) : ?>
-            <a class="tag" href="tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
+            <a class="tag" href="../../tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
             <?php endforeach; ?>
         </div>
         <div class="details">
