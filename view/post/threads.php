@@ -11,11 +11,11 @@ if ($authorized) { ?>
     <div class="thread">
         <div class="left">
             <div class="score">
-                <span class="number">tmp</span>
+                <span class="number"><?= $thread->voteCount ?></span>
                 <span>röster</span>
             </div>
             <div class="answers">
-                <span class="number">tmp</span>
+                <span class="number"><?= $thread->answerCount ?></span>
                 <span>svar</span>
             </div>
         </div>
