@@ -120,6 +120,7 @@ class ThreadController implements ContainerInjectableInterface
         $user->setDb($this->di->get("dbqb"));
         $author = $user->findWhere("id = ?", $thread->author);
         $thread->authorName = $author->name;
+        $thread->authorAvatar = $author->gravatar();
 
         $answersAndComments = $post->findAllWhere("thread = ?", intval($threadId));
         $creationDates = array_column($answersAndComments, 'creation');
@@ -134,6 +135,9 @@ class ThreadController implements ContainerInjectableInterface
             foreach ($users as $author) {
                 if ($author->id === $id) {
                     $post->authorName = $author->name;
+                    $user = new User();
+                    $user->avatar = $author->avatar;
+                    $post->authorAvatar = $user->gravatar();
                 }
             }
 
