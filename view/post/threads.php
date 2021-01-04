@@ -21,7 +21,7 @@ if ($authorized) { ?>
         </div>
         <div class="right">
             <div class="content">
-                <a class="title" href="thread/view/<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
+                <a class="title" href="threads/view/<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
                 <div class="snippet"><?= htmlentities($thread->content) ?></div>
             </div>
             <div class="details">
