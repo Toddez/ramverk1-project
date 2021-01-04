@@ -180,3 +180,23 @@ form textarea {
     height: 40px;
     border-radius: 50%;
 }
+
+.allTags {
+    display: flex;
+    flex-direction: column;
+}
+
+.allTags > .tag {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+    align-items: center;
+}
+
+.allTags > .tag > .count {
+    padding: 0.5rem;
+    margin-right: 1rem;
+    background-color: var(--color-accent4);
+    color: var(--color-background0);
+    border-radius: 2px;
+}
