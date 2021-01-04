@@ -51,6 +51,7 @@ class ThreadController implements ContainerInjectableInterface
             foreach ($users as $author) {
                 if ($author->id === $id) {
                     $thread->authorName = $author->name;
+                    $thread->authorAvatar = $author->gravatar();
                 }
             }
 
