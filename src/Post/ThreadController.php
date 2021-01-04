@@ -10,6 +10,7 @@ use Teca\Post\HTMLForm\CommentForm;
 use Teca\User\User;
 use Teca\Post\Post;
 use Teca\Post\PostType;
+use Teca\Vote\Vote;
 
 class ThreadController implements ContainerInjectableInterface
 {
@@ -28,11 +29,32 @@ class ThreadController implements ContainerInjectableInterface
         $user->setDb($this->di->get("dbqb"));
         $users = $user->findAllWhere("id IN (?)", [$authors]);
 
+        $threadIds = array_unique(array_column($threads, 'id'));
+        $answers = $post->findAllWhere("thread IN (?) AND type = ?", [$threadIds, PostType::ANSWER]);
+
+        $vote = new Vote();
+        $vote->setDb($this->di->get("dbqb"));
+        $votes = $vote->findAllWhere("post IN (?)", [$threadIds]);
+
         foreach ($threads as $thread) {
             $id = $thread->author;
+            $thread->answerCount = 0;
+            $thread->voteCount = 0;
             foreach ($users as $author) {
                 if ($author->id === $id) {
                     $thread->authorName = $author->name;
+                }
+            }
+
+            foreach ($answers as $answer) {
+                if (intval($answer->thread) === intval($thread->id)) {
+                    $thread->answerCount++;
+                }
+            }
+
+            foreach ($votes as $vote) {
+                if (intval($vote->post) === intval($thread->id)) {
+                    $thread->voteCount += intval($vote->value);
                 }
             }
         }
@@ -115,6 +137,15 @@ class ThreadController implements ContainerInjectableInterface
         $post->setDb($this->di->get("dbqb"));
         $thread = $post->findWhere("id = ?", intval($threadId));
         $thread->comments = [];
+        $thread->answerCount = 0;
+        $thread->voteCount = 0;
+
+        $vote = new Vote();
+        $vote->setDb($this->di->get("dbqb"));
+        $votes = $vote->findAllWhere("post = ?", $thread->id);
+        foreach ($votes as $vote) {
+            $thread->voteCount += intval($vote->value);
+        }
 
         $user = new user();
         $user->setDb($this->di->get("dbqb"));
@@ -127,13 +158,16 @@ class ThreadController implements ContainerInjectableInterface
         array_multisort($creationDates, SORT_ASC, $answersAndComments);
 
         $authors = array_unique(array_column($answersAndComments, 'author'));
+        $postIds = array_unique(array_column($answersAndComments, 'id'));
         $users = $user->findAllWhere("id IN (?)", [$authors]);
+        $votes = $vote->findAllWhere("post IN (?)", [$postIds]);
 
         $answers = [];
         foreach ($answersAndComments as $post) {
             $id = $post->author;
+            $post->voteCount = 0;
             foreach ($users as $author) {
-                if ($author->id === $id) {
+                if (intval($author->id) === intval($id)) {
                     $post->authorName = $author->name;
                     $user = new User();
                     $user->avatar = $author->avatar;
@@ -141,9 +175,16 @@ class ThreadController implements ContainerInjectableInterface
                 }
             }
 
+            foreach ($votes as $vote) {
+                if (intval($vote->post) === intval($post->id)) {
+                    $post->voteCount += intval($vote->value);
+                }
+            }
+
             if (intval($post->type) === PostType::ANSWER) {
                 $post->comments = [];
                 $answers[] = $post;
+                $thread->answerCount++;
             }
 
             if (intval($post->type) === PostType::COMMENT) {
