@@ -22,4 +22,10 @@ CREATE TABLE Post (
     "answer" BOOLEAN DEFAULT FALSE
 );
 
--- Table for correlating which user upvoted/downvoted which post
+-- Table Votes
+DROP TABLE IF EXISTS Vote;
+CREATE TABLE Vote (
+    "user" INTEGER NOT NULL,
+    "post" INTEGER NOT NULL,
+    "value" INTEGER NOT NULL
+)
