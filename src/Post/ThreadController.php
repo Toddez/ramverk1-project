@@ -79,6 +79,7 @@ class ThreadController implements ContainerInjectableInterface
 
         $page->add("post/threads", [
             "threads" => $threads,
+            "prefix" => "",
         ]);
 
         return $page->render([
