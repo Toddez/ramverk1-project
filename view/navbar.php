@@ -12,7 +12,7 @@ namespace Anax\View;
 $user = new \Teca\User\User();
 $authorized = $user->authorized($di);
 $user->currentUser($di);
-$auth["items"][0]["text"] = $user->name;
+$auth["items"][0]["text"] = $user->name . "<img class='avatar' src='". $user->gravatar() . "'>";
 
 $navbar = new \Anax\Navigation\Navbar();
 $navbar->setDI($di);
