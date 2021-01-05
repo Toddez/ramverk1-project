@@ -23,14 +23,6 @@ CREATE TABLE Post (
     "answer" BOOLEAN DEFAULT FALSE
 );
 
--- Table Vote
-DROP TABLE IF EXISTS Vote;
-CREATE TABLE Vote (
-    "user" INTEGER NOT NULL,
-    "post" INTEGER NOT NULL,
-    "value" INTEGER NOT NULL
-);
-
 -- Table Tag
 DROP TABLE IF EXISTS Tag;
 CREATE TABLE Tag (
