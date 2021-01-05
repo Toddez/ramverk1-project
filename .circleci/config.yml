@@ -17,11 +17,11 @@ jobs:
                     curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
                     chmod +x ./cc-test-reporter
 
-            #- run:
-            #    name: Setup test database
-            #    command: |
-            #        sqlite3 data/test_placeholder.sqlite < sql/ddl/test_sqlite.sql
-            #        chmod 666 data/test_placeholder.sqlite
+            - run:
+                name: Setup test database
+                command: |
+                    sqlite3 data/test_db.sqlite < sql/ddl/db_sqlite.sql
+                    chmod 666 data/test_db.sqlite
 
             - restore_cache:
                 keys:
