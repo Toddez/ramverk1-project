@@ -231,6 +231,8 @@ form textarea {
 }
 
 .snippet {
-    max-height: 4.2rem;
-    overflow-y: hidden;
+    max-height: 3.3rem;
+    max-width: 100%;
+    overflow: hidden;
+    overflow-wrap: anywhere;
 }
