@@ -12,7 +12,7 @@ function comments($parent)
                     <span class="votes"><?= $parent->voteCount ?></span>
                 </div>
                 <div class="right">
-                    <span class="content"><?= htmlentities($comment->content) ?> - </span>
+                    <span class="content"><?= $comment->content ?> - </span>
                     <a class="name" href="user/view/<?= $comment->author ?>"><?= htmlentities($comment->authorName) ?></a>
                     <span class="date"><?= date("H:i F j 'y", $comment->creation) ?></span>
                 </div>
@@ -37,7 +37,7 @@ function comments($parent)
     <div class="right">
         <a class="title" href="<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
         <div class="content">
-            <?= htmlentities($thread->content) ?>
+            <?= $thread->content ?>
         </div>
         <div class="tags">
             <?php foreach ($thread->tagValues as $tag) : ?>
@@ -64,7 +64,7 @@ function comments($parent)
             </div>
         </div>
         <div class="right">
-            <div class="content"><?= htmlentities($answer->content) ?></div>
+            <div class="content"><?= $answer->content ?></div>
             <div class="details">
                 <div class="date"><?= date("H:i F j 'y", $answer->creation) ?></div>
                 <a class="name" href="../../user/view/<?= $answer->author ?>"><?= htmlentities($answer->authorName) ?></a>

@@ -26,7 +26,7 @@ if (isset($text)) { ?>
         <div class="right">
             <div class="content">
                 <a class="title" href="<?= $prefix ?>threads/view/<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
-                <div class="snippet"><?= htmlentities($thread->content) ?></div>
+                <div class="snippet"><?= $thread->content ?></div>
             </div>
             <div class="details">
                 <div class="tags">
