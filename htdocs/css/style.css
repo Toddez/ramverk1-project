@@ -54,6 +54,10 @@ form textarea {
     flex-direction: column;
 }
 
+.threads > .seperator:not(:nth-child(1)) {
+    margin-top: 2rem;
+}
+
 .thread {
     width: 100%;
     display: flex;
