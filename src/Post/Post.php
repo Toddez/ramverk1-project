@@ -16,5 +16,4 @@ class Post extends ActiveRecordModel
     public $thread;
     public $parent;
     public $creation;
-    public $answer;
 }
