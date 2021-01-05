@@ -4,6 +4,7 @@ namespace Teca\Post;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Anax\TextFilter\TextFilter;
 use Teca\Post\HTMLForm\NewThreadForm;
 use Teca\Post\HTMLForm\AnswerForm;
 use Teca\Post\HTMLForm\CommentForm;
@@ -41,11 +42,13 @@ class ThreadController implements ContainerInjectableInterface
         $tag->setDb($this->di->get("dbqb"));
         $tags = $tag->findAllWhere("id IN (?)", [$tagIds]);
 
+        $filter = new TextFilter();
         foreach ($threads as $thread) {
             $id = $thread->author;
             $thread->answerCount = 0;
             $thread->voteCount = 0;
             $thread->tagValues = [];
+            $thread->content = $filter->parse($thread->content, ["markdown"])->text;
             foreach ($users as $author) {
                 if ($author->id === $id) {
                     $thread->authorName = $author->name;
@@ -156,12 +159,15 @@ class ThreadController implements ContainerInjectableInterface
 
     public function viewAction($threadId) : object
     {
+        $filter = new TextFilter();
+
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $thread = $post->findWhere("id = ?", intval($threadId));
         $thread->comments = [];
         $thread->answerCount = 0;
         $thread->voteCount = 0;
+        $thread->content = $filter->parse($thread->content, ["markdown"])->text;
 
         $vote = new Vote();
         $vote->setDb($this->di->get("dbqb"));
@@ -197,6 +203,7 @@ class ThreadController implements ContainerInjectableInterface
         foreach ($answersAndComments as $post) {
             $id = $post->author;
             $post->voteCount = 0;
+            $post->content = $filter->parse($post->content, ["markdown"])->text;
             foreach ($users as $author) {
                 if (intval($author->id) === intval($id)) {
                     $post->authorName = $author->name;
