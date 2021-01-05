@@ -4,6 +4,7 @@ namespace Teca\User;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
+use Anax\TextFilter\TextFilter;
 use Teca\User\HTMLForm\ProfileForm;
 use Teca\User\HTMLForm\LoginForm;
 use Teca\User\HTMLForm\RegisterForm;
@@ -109,11 +110,13 @@ class UserController implements ContainerInjectableInterface
         $tag->setDb($this->di->get("dbqb"));
         $tags = $tag->findAllWhere("id IN (?)", [$tagIds]);
 
+        $filter = new TextFilter();
         foreach (array_merge($threads, $answeredThreads) as $thread) {
             $id = $thread->author;
             $thread->answerCount = 0;
             $thread->voteCount = 0;
             $thread->tagValues = [];
+            $thread->content = $filter->parse($thread->content, ["markdown"])->text;
             foreach ($users as $author) {
                 if ($author->id === $id) {
                     $thread->authorName = $author->name;
