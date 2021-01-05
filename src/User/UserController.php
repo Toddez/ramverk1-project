@@ -12,7 +12,6 @@ use Teca\User\User;
 use Teca\Post\Post;
 use Teca\Post\PostType;
 use Teca\Tag\Tag;
-use Teca\Vote\Vote;
 
 class UserController implements ContainerInjectableInterface
 {
@@ -93,10 +92,6 @@ class UserController implements ContainerInjectableInterface
         $threadIds = array_column(array_merge($threads, $answeredThreads), "id");
         $tagIds = array_unique(explode(",", implode(",", array_column(array_merge($threads, $answeredThreads), "tags"))));
 
-        $vote = new Vote();
-        $vote->setDb($this->di->get("dbqb"));
-        $votes = $vote->findAllWhere("post IN (?)", [$threadIds]);
-
         $authors = array_unique(array_column(array_merge($threads, $answeredThreads), 'author'));
         $user = new user();
         $user->setDb($this->di->get("dbqb"));
@@ -127,12 +122,6 @@ class UserController implements ContainerInjectableInterface
             foreach ($answers as $answer) {
                 if (intval($answer->thread) === intval($thread->id)) {
                     $thread->answerCount++;
-                }
-            }
-
-            foreach ($votes as $vote) {
-                if (intval($vote->post) === intval($thread->id)) {
-                    $thread->voteCount += intval($vote->value);
                 }
             }
 

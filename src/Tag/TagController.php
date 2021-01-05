@@ -8,7 +8,6 @@ use Anax\TextFilter\TextFilter;
 use Teca\Post\Post;
 use Teca\Post\PostType;
 use Teca\Tag\Tag;
-use Teca\Vote\Vote;
 use Teca\User\User;
 
 class TagController implements ContainerInjectableInterface
@@ -78,10 +77,6 @@ class TagController implements ContainerInjectableInterface
         $threadIds = array_column($posts, "id");
         $tagIds = array_unique(explode(",", implode(",", array_column($threads, "tags"))));
 
-        $vote = new Vote();
-        $vote->setDb($this->di->get("dbqb"));
-        $votes = $vote->findAllWhere("post IN (?)", [$threadIds]);
-
         $authors = array_unique(array_column($threads, 'author'));
         $user = new user();
         $user->setDb($this->di->get("dbqb"));
@@ -112,12 +107,6 @@ class TagController implements ContainerInjectableInterface
             foreach ($answers as $answer) {
                 if (intval($answer->thread) === intval($thread->id)) {
                     $thread->answerCount++;
-                }
-            }
-
-            foreach ($votes as $vote) {
-                if (intval($vote->post) === intval($thread->id)) {
-                    $thread->voteCount += intval($vote->value);
                 }
             }
 

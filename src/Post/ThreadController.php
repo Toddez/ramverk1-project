@@ -11,7 +11,6 @@ use Teca\Post\HTMLForm\CommentForm;
 use Teca\User\User;
 use Teca\Post\Post;
 use Teca\Post\PostType;
-use Teca\Vote\Vote;
 use Teca\Tag\Tag;
 
 class ThreadController implements ContainerInjectableInterface
@@ -34,10 +33,6 @@ class ThreadController implements ContainerInjectableInterface
 
         $answers = $post->findAllWhere("thread IN (?) AND type = ?", [$threadIds, PostType::ANSWER]);
 
-        $vote = new Vote();
-        $vote->setDb($this->di->get("dbqb"));
-        $votes = $vote->findAllWhere("post IN (?)", [$threadIds]);
-
         $tag = new Tag();
         $tag->setDb($this->di->get("dbqb"));
         $tags = $tag->findAllWhere("id IN (?)", [$tagIds]);
@@ -59,12 +54,6 @@ class ThreadController implements ContainerInjectableInterface
             foreach ($answers as $answer) {
                 if (intval($answer->thread) === intval($thread->id)) {
                     $thread->answerCount++;
-                }
-            }
-
-            foreach ($votes as $vote) {
-                if (intval($vote->post) === intval($thread->id)) {
-                    $thread->voteCount += intval($vote->value);
                 }
             }
 
@@ -169,13 +158,6 @@ class ThreadController implements ContainerInjectableInterface
         $thread->voteCount = 0;
         $thread->content = $filter->parse($thread->content, ["markdown"])->text;
 
-        $vote = new Vote();
-        $vote->setDb($this->di->get("dbqb"));
-        $votes = $vote->findAllWhere("post = ?", $thread->id);
-        foreach ($votes as $vote) {
-            $thread->voteCount += intval($vote->value);
-        }
-
         $tagIds = explode(",", $thread->tags);
 
         $tag = new Tag();
@@ -195,9 +177,7 @@ class ThreadController implements ContainerInjectableInterface
         array_multisort($creationDates, SORT_ASC, $answersAndComments);
 
         $authors = array_unique(array_column($answersAndComments, 'author'));
-        $postIds = array_unique(array_column($answersAndComments, 'id'));
         $users = $user->findAllWhere("id IN (?)", [$authors]);
-        $votes = $vote->findAllWhere("post IN (?)", [$postIds]);
 
         $answers = [];
         foreach ($answersAndComments as $post) {
@@ -210,12 +190,6 @@ class ThreadController implements ContainerInjectableInterface
                     $user = new User();
                     $user->avatar = $author->avatar;
                     $post->authorAvatar = $user->gravatar();
-                }
-            }
-
-            foreach ($votes as $vote) {
-                if (intval($vote->post) === intval($post->id)) {
-                    $post->voteCount += intval($vote->value);
                 }
             }
 

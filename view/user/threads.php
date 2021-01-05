@@ -6,10 +6,6 @@
     <?php foreach ($threads as $thread) : ?>
     <div class="thread">
         <div class="left">
-            <div class="score">
-                <span class="number"><?= $thread->voteCount ?></span>
-                <span>röster</span>
-            </div>
             <div class="answers">
                 <span class="number"><?= $thread->answerCount ?></span>
                 <span>svar</span>
@@ -37,10 +33,6 @@
     <?php foreach ($answeredThreads as $thread) : ?>
     <div class="thread">
         <div class="left">
-            <div class="score">
-                <span class="number"><?= $thread->voteCount ?></span>
-                <span>röster</span>
-            </div>
             <div class="answers">
                 <span class="number"><?= $thread->answerCount ?></span>
                 <span>svar</span>

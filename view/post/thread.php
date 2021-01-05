@@ -8,9 +8,6 @@ function comments($parent)
         <div class="comments">
             <?php foreach ($parent->comments as $comment) : ?>
             <div class="comment">
-                <div class="left">
-                    <span class="votes"><?= $parent->voteCount ?></span>
-                </div>
                 <div class="right">
                     <span class="content"><?= $comment->content ?> - </span>
                     <a class="name" href="user/view/<?= $comment->author ?>"><?= htmlentities($comment->authorName) ?></a>
@@ -25,10 +22,6 @@ function comments($parent)
 
 <div class="thread inspect">
     <div class="left">
-        <div class="score">
-            <span class="number"><?= $thread->voteCount ?></span>
-            <span>röster</span>
-        </div>
         <div class="answers">
             <span class="number"><?= $thread->answerCount ?></span>
             <span>svar</span>
@@ -57,12 +50,6 @@ function comments($parent)
 <div class="answers">
     <?php foreach ($answers as $answer) : ?>
     <div class="answer thread inspect">
-        <div class="left">
-            <div class="score">
-                <span class="number"><?= $answer->voteCount ?></span>
-                <span>röster</span>
-            </div>
-        </div>
         <div class="right">
             <div class="content"><?= $answer->content ?></div>
             <div class="details">
