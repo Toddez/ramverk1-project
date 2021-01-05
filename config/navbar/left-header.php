@@ -17,7 +17,7 @@ return [
         ],
         [
             "text" => "Användare",
-            "url" => "users",
+            "url" => "user/all",
             "title" => "Samtliga användare.",
         ],
         [
