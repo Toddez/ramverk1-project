@@ -71,6 +71,16 @@
     justify-content: flex-end;
 }
 
+.region-header-col-3 ul > li > a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.region-header-col-3 ul > li > a > img {
+    margin-left: 0.5rem;
+}
+
 /*
 * Content
 */
