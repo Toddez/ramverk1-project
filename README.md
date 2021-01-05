@@ -28,6 +28,15 @@ May require ``data/`` to have write perms as well
 
 ## Testing
 
+Create tables  
+``sqlite3 data/test_db.sqlite < sql/ddl/db_sqlite.sql``
+
+Set permissions  
+``chmod 666 data/test_db.sqlite``  
+
+May require ``data/`` to have write perms as well  
+``chmod a+w data/``
+
 Run entire test suite  
 ``make test``
 
