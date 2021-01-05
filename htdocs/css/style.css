@@ -52,6 +52,8 @@ form textarea {
 .threads {
     display: flex;
     flex-direction: column;
+    margin: 1rem 0;
+    width: 100%;
 }
 
 .threads > .seperator:not(:nth-child(1)) {
@@ -189,6 +191,8 @@ form textarea {
 .allUsers {
     display: flex;
     flex-direction: column;
+    margin: 1rem 0;
+    width: 50%;
 }
 
 .allTags > .tag,
@@ -210,4 +214,10 @@ form textarea {
 
 .allUsers > .user > .avatar {
     margin-left: 0.5rem;
+}
+
+.region-main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
