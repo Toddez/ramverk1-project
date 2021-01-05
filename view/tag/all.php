@@ -2,9 +2,8 @@
 
 ?>
 
-<div>Samtliga taggar:</div>
-
 <div class="allTags">
+    <div>Samtliga taggar:</div>
     <?php foreach ($tags as $tag) : ?>
     <div class="tag">
         <div class="count"><?= $tag->useCount ?></div>

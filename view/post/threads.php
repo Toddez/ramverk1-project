@@ -4,13 +4,13 @@ $authorized = $user->authorized($di);
 
 if (isset($text)) { ?>
     <div><?= htmlentities($text) ?></div>
-<?php }
-
-if ($authorized && !isset($text)) { ?>
-    <a href="threads/new">Ny fråga</a>
 <?php } ?>
 
 <div class="threads">
+    <?php if ($authorized && !isset($text)) { ?>
+        <a class="newThread" href="threads/new">Ny fråga</a>
+    <?php } ?>
+    <div>Samtliga frågor:</div>
     <?php foreach ($threads as $thread) : ?>
     <div class="thread">
         <div class="left">
