@@ -65,19 +65,12 @@ class TagController implements ContainerInjectableInterface
 
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
-        $posts = $post->findAll();
-
-        $threads = [];
-        foreach ($posts as $post) {
-            if (in_array($targetTag->id, explode(",", $post->tags))) {
-                $threads[] = $post;
-            }
-        }
+        $posts = $post->findAllWhere("type = ?", PostType::THREAD);
 
         $threadIds = array_column($posts, "id");
-        $tagIds = array_unique(explode(",", implode(",", array_column($threads, "tags"))));
+        $tagIds = array_unique(explode(",", implode(",", array_column($posts, "tags"))));
 
-        $authors = array_unique(array_column($threads, 'author'));
+        $authors = array_unique(array_column($posts, 'author'));
         $user = new user();
         $user->setDb($this->di->get("dbqb"));
         $users = $user->findAllWhere("id IN (?)", [$authors]);
@@ -91,28 +84,33 @@ class TagController implements ContainerInjectableInterface
         $tags = $tag->findAllWhere("id IN (?)", [$tagIds]);
 
         $filter = new TextFilter();
-        foreach ($threads as $thread) {
-            $id = $thread->author;
-            $thread->answerCount = 0;
-            $thread->voteCount = 0;
-            $thread->tagValues = [];
-            $thread->content = $filter->parse($thread->content, ["markdown"])->text;
+        $threads = [];
+        foreach ($posts as $post) {
+            if (in_array($targetTag->id, explode(",", $post->tags))) {
+                $threads[] = $post;
+            }
+
+            $id = $post->author;
+            $post->answerCount = 0;
+            $post->voteCount = 0;
+            $post->tagValues = [];
+            $post->content = $filter->parse($post->content, ["markdown"])->text;
             foreach ($users as $author) {
                 if ($author->id === $id) {
-                    $thread->authorName = $author->name;
-                    $thread->authorAvatar = $author->gravatar();
+                    $post->authorName = $author->name;
+                    $post->authorAvatar = $author->gravatar();
                 }
             }
 
             foreach ($answers as $answer) {
-                if (intval($answer->thread) === intval($thread->id)) {
-                    $thread->answerCount++;
+                if (intval($answer->thread) === intval($post->id)) {
+                    $post->answerCount++;
                 }
             }
 
             foreach ($tags as $tag) {
-                if (in_array($tag->id, explode(",", $thread->tags))) {
-                    $thread->tagValues[] = $tag;
+                if (in_array($tag->id, explode(",", $post->tags))) {
+                    $post->tagValues[] = $tag;
                 }
             }
         }
