@@ -4,7 +4,7 @@ return [
         "region" => "layout",
         "template" => "anax/v2/layout/dbwebb_se",
         "data" => [
-            "baseTitle" => " | project",
+            "baseTitle" => " | projekt",
             "bodyClass" => null,
             "favicon" => "img/logo.svg",
             "htmlClass" => null,
@@ -24,7 +24,7 @@ return [
             "template" => "anax/v2/header/site_logo_text",
             "data" => [
                 "homeLink"      => "",
-                "siteLogoText"  => "project",
+                "siteLogoText"  => "ramverk1 projekt",
                 "siteLogoTextIcon" => "img/logo.svg",
                 "siteLogoTextIconAlt" => "logo",
             ],
