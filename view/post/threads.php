@@ -2,7 +2,11 @@
 $user = new \Teca\User\User();
 $authorized = $user->authorized($di);
 
-if ($authorized) { ?>
+if (isset($text)) { ?>
+    <div><?= htmlentities($text) ?></div>
+<?php }
+
+if ($authorized && !isset($text)) { ?>
     <a href="threads/new">Ny fråga</a>
 <?php } ?>
 
@@ -21,17 +25,17 @@ if ($authorized) { ?>
         </div>
         <div class="right">
             <div class="content">
-                <a class="title" href="threads/view/<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
+                <a class="title" href="<?= $prefix ?>threads/view/<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
                 <div class="snippet"><?= htmlentities($thread->content) ?></div>
             </div>
             <div class="details">
                 <div class="tags">
                     <?php foreach ($thread->tagValues as $tag) : ?>
-                    <a class="tag" href="tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
+                    <a class="tag" href="<?= $prefix ?>tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
                     <?php endforeach; ?>
                 </div>
                 <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
-                <a class="name" href="user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
+                <a class="name" href="<?= $prefix ?>user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
                 <img class="avatar" src="<?= $thread->authorAvatar ?>">
             </div>
         </div>
