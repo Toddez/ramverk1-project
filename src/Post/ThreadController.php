@@ -17,10 +17,8 @@ class ThreadController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    public function indexAction() : object
+    public function getThreads() : array
     {
-        $page = $this->di->get("page");
-
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $threads = $post->findAllWhere("type = ?", PostType::THREAD);
@@ -76,6 +74,15 @@ class ThreadController implements ContainerInjectableInterface
 
         $creationDates = array_column($threads, 'creation');
         array_multisort($creationDates, SORT_DESC, $threads);
+
+        return $threads;
+    }
+
+    public function indexAction() : object
+    {
+        $page = $this->di->get("page");
+
+        $threads = $this->getThreads();
 
         $page->add("post/threads", [
             "threads" => $threads,

@@ -37,10 +37,8 @@ class UserController implements ContainerInjectableInterface
         ]);
     }
 
-    public function allAction() : object
+    public function getUsers() : array
     {
-        $page = $this->di->get("page");
-
         $user = new User();
         $user->setDb($this->di->get("dbqb"));
         $users = $user->findAll();
@@ -61,8 +59,18 @@ class UserController implements ContainerInjectableInterface
         $authorCount = array_column($users, 'authorCount');
         array_multisort($authorCount, SORT_DESC, $users);
 
+        return $users;
+    }
+
+    public function allAction() : object
+    {
+        $page = $this->di->get("page");
+
+        $users = $this->getUsers();
+
         $page->add("user/all", [
             "users" => $users,
+            "prefix" => "../",
         ]);
 
         return $page->render([

@@ -14,10 +14,8 @@ class TagController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
-    public function indexAction() : object
+    public function getTags() : array
     {
-        $page = $this->di->get("page");
-
         $tag = new Tag();
         $tag->setDb($this->di->get("dbqb"));
         $tags = $tag->findAll();
@@ -38,8 +36,18 @@ class TagController implements ContainerInjectableInterface
         $useCounts = array_column($tags, 'useCount');
         array_multisort($useCounts, SORT_DESC, $tags);
 
+        return $tags;
+    }
+
+    public function indexAction() : object
+    {
+        $page = $this->di->get("page");
+
+        $tags = $this->getTags();
+
         $page->add("tag/all", [
             "tags" => $tags,
+            "prefix" => "",
         ]);
 
         return $page->render([
