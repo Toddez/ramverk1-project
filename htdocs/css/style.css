@@ -229,3 +229,8 @@ form textarea {
     flex-direction: row;
     flex-wrap: wrap;
 }
+
+.snippet {
+    max-height: 4.2rem;
+    overflow-y: hidden;
+}
