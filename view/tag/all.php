@@ -2,6 +2,8 @@
 
 ?>
 
+<div>Samtliga taggar:</div>
+
 <div class="allTags">
     <?php foreach ($tags as $tag) : ?>
     <div class="tag">
