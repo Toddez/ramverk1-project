@@ -37,6 +37,39 @@ class UserController implements ContainerInjectableInterface
         ]);
     }
 
+    public function allAction() : object
+    {
+        $page = $this->di->get("page");
+
+        $user = new User();
+        $user->setDb($this->di->get("dbqb"));
+        $users = $user->findAll();
+
+        $post = new Post();
+        $post->setDb($this->di->get("dbqb"));
+        $posts = $post->findAll();
+
+        foreach ($users as $user) {
+            $user->authorCount = 0;
+            foreach ($posts as $post) {
+                if ($user->id === $post->author) {
+                    $user->authorCount++;
+                }
+            }
+        }
+
+        $authorCount = array_column($users, 'authorCount');
+        array_multisort($authorCount, SORT_DESC, $users);
+
+        $page->add("user/all", [
+            "users" => $users,
+        ]);
+
+        return $page->render([
+            "title" => "Samtliga användare",
+        ]);
+    }
+
     public function viewAction($userId) : object
     {
         $page = $this->di->get("page");
@@ -109,7 +142,7 @@ class UserController implements ContainerInjectableInterface
         ]);
 
         return $page->render([
-            "title" => "Specifika taggar",
+            "title" => "Specifik användare",
         ]);
     }
 
