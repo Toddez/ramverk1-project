@@ -41,10 +41,6 @@ class UserController implements ContainerInjectableInterface
     {
         $page = $this->di->get("page");
 
-        $user = new User();
-        $user->setDb($this->di->get("dbqb"));
-        $targetUser = $user->findWhere("id = ?", $userId);
-
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $threads = $post->findAllWhere("author = ? AND type = ?", [$userId, PostType::THREAD]);
