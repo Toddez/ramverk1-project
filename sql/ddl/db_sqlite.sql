@@ -19,8 +19,7 @@ CREATE TABLE Post (
     "tags" TEXT,
     "thread" INTEGER DEFAULT NULL,
     "parent" INTEGER,
-    "creation" DATETIME NOT NULL,
-    "answer" BOOLEAN DEFAULT FALSE
+    "creation" DATETIME NOT NULL
 );
 
 -- Table Tag
