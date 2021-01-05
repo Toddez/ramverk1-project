@@ -150,7 +150,7 @@ class UserController implements ContainerInjectableInterface
     {
         $user = new User();
         $user->logout($this->di);
-        $this->di->get("response")->redirect("user")->send();
+        return $this->di->get("response")->redirect("user")->send();
     }
 
     public function loginAction() : object
