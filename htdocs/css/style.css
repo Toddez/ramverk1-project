@@ -185,22 +185,29 @@ form textarea {
     border-radius: 50%;
 }
 
-.allTags {
+.allTags,
+.allUsers {
     display: flex;
     flex-direction: column;
 }
 
-.allTags > .tag {
+.allTags > .tag,
+.allUsers > .user {
     display: flex;
     flex-direction: row;
     padding: 0.5rem;
     align-items: center;
 }
 
-.allTags > .tag > .count {
+.allTags > .tag > .count,
+.allUsers > .user > .count {
     padding: 0.5rem;
     margin-right: 1rem;
     background-color: var(--color-accent4);
     color: var(--color-background0);
     border-radius: 2px;
+}
+
+.allUsers > .user > .avatar {
+    margin-left: 0.5rem;
 }
