@@ -231,7 +231,7 @@ form textarea {
 }
 
 .snippet {
-    max-height: 3.3rem;
+    max-height: 4.1rem;
     max-width: 100%;
     overflow: hidden;
     overflow-wrap: anywhere;
@@ -239,4 +239,19 @@ form textarea {
 
 .left > .answers {
     padding: 0.2rem;
+}
+
+.newThread {
+    background-color: var(--color-accent2);
+    color: var(--color-background0);
+    width: 6rem;
+    text-align: center;
+    padding: 0.2rem 0.7rem;
+    margin: 0.5rem;
+    border-radius: 2px;
+}
+
+.newThread:hover {
+    text-decoration: none;
+    color: var(--color-background5);
 }
