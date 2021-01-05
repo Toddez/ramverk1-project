@@ -78,7 +78,7 @@ class NewThreadForm extends FormModel
                 }
             }
 
-            if (!$exists) {
+            if (!$exists && $searchTag !== "") {
                 $tag = new Tag();
                 $tag->setDb($this->di->get("dbqb"));
                 $tag->value = $searchTag;
