@@ -22,7 +22,6 @@ class TagController implements ContainerInjectableInterface
         $tag->setDb($this->di->get("dbqb"));
         $tags = $tag->findAll();
 
-        $tagIds = array_column($tags, "id");
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $posts = $post->findAll();
