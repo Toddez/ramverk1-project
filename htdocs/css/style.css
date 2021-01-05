@@ -236,3 +236,7 @@ form textarea {
     overflow: hidden;
     overflow-wrap: anywhere;
 }
+
+.left > .answers {
+    padding: 0.2rem;
+}
