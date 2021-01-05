@@ -87,7 +87,7 @@ class UserController implements ContainerInjectableInterface
         $threads = $post->findAllWhere("author = ? AND type = ?", [$userId, PostType::THREAD]);
         $answers = $post->findAllWhere("author = ? AND type = ?", [$userId, PostType::ANSWER]);
 
-        $answeredThreads = $post->findAllWhere("id IN (?)", array_column($answers, "thread"));
+        $answeredThreads = $post->findAllWhere("id IN (?)", [array_column($answers, "thread")]);
 
         $threadIds = array_column(array_merge($threads, $answeredThreads), "id");
         $tagIds = array_unique(explode(",", implode(",", array_column(array_merge($threads, $answeredThreads), "tags"))));
