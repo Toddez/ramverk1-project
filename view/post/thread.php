@@ -18,7 +18,7 @@ function comments($parent)
                 </div>
                 <div class="right">
                     <span class="content"><?= $comment->content ?> - </span>
-                    <a class="name" href="user/view/<?= $comment->author ?>"><?= $comment->authorName ?></a>
+                    <a class="name" href="../../user/view/<?= $comment->author ?>"><?= $comment->authorName ?></a>
                     <span class="date"><?= date("H:i F j 'y", $comment->creation) ?></span>
                 </div>
             </div>
