@@ -47,6 +47,15 @@ function comments($parent)
     </div>
 </div>
 
+<div class="sorting">
+    <div>Sorterar svar efter: <?= $sort === "creation" ? "Datum" : "Rank" ?></div>
+    <div>
+        Ändra sortering till:
+        <a href="../sortby/<?= $thread->id ?>/creation">Datum</a> |
+        <a href="../sortby/<?= $thread->id ?>/score">Rank</a>
+    </div>
+</div>
+
 <div class="answers">
     <?php foreach ($answers as $answer) : ?>
     <div class="answer thread inspect">
