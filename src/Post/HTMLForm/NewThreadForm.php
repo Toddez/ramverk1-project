@@ -29,6 +29,7 @@ class NewThreadForm extends FormModel
                     "validation" => [
                         "not_empty"
                     ],
+                    "escape-values" => false
                 ],
                 "content" => [
                     "type" => "textarea",
@@ -37,11 +38,13 @@ class NewThreadForm extends FormModel
                     "validation" => [
                         "not_empty"
                     ],
+                    "escape-values" => false
                 ],
                 "tags" => [
                     "type" => "text",
                     "label" => "Taggar (separera med kommatecken)",
                     "placeholder" => "regex,pandas,arrays,...",
+                    "escape-values" => false
                 ],
                 "submit" => [
                     "type" => "submit",

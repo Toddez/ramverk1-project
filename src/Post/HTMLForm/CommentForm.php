@@ -31,6 +31,7 @@ class CommentForm extends FormModel
                     "validation" => [
                         "not_empty"
                     ],
+                    "escape-values" => false
                 ],
                 "submit" => [
                     "type" => "submit",
