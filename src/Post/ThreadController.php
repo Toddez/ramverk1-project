@@ -245,6 +245,10 @@ class ThreadController implements ContainerInjectableInterface
         $user = new User();
         $user->currentUser($this->di);
 
+        if (!$user->id) {
+            return $this->di->get("response")->redirect("threads/view/" . $threadId);
+        }
+
         $vote = new Vote();
         $vote->setDb($this->di->get("dbqb"));
         $currentVote = $vote->findWhere("user = ? AND post = ?", [$user->id, $postId]);
@@ -269,22 +273,30 @@ class ThreadController implements ContainerInjectableInterface
         $user = new User();
         $user->currentUser($this->di);
 
+        if (!$user->id) {
+            return $this->di->get("response")->redirect("threads/view/" . $threadId);
+        }
+
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $answer = $post->findWhere("thread = ? AND id = ? AND type = ?", [$threadId, $postId, PostType::ANSWER]);
+
+        if ($answer->author !== $user->id) {
+            return $this->di->get("response")->redirect("threads/view/" . $threadId);
+        }
 
         if ($answer->id) {
             $answer->answer = true;
             $answer->save();
         }
 
-        $this->di->get("response")->redirect("threads/view/" . $threadId);
+        return $this->di->get("response")->redirect("threads/view/" . $threadId);
     }
 
     public function sortbyAction($threadId, $value) : object
     {
         $session = $this->di->get("session");
         $session->set("sortby", $value);
-        $this->di->get("response")->redirect("threads/view/" . $threadId);
+        return $this->di->get("response")->redirect("threads/view/" . $threadId);
     }
 }
