@@ -267,3 +267,7 @@ form textarea {
 .answer.marked {
     border: 1px solid var(--color-accent4);
 }
+
+.tag {
+    white-space: nowrap;
+}
