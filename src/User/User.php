@@ -40,7 +40,7 @@ class User extends ActiveRecordModel
         $session->set("user", $this->name);
     }
 
-    public function logout($di)
+    private function logout($di)
     {
         $session = $di->get("session");
         $session->set("authorized", false);
