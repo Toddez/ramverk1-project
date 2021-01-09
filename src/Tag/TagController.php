@@ -92,7 +92,7 @@ class TagController implements ContainerInjectableInterface
 
             $id = $post->author;
             $post->answerCount = 0;
-            $post->voteCount = 0;
+            $post->score = $post->score($this->di);
             $post->tagValues = [];
             $post->content = $filter->parse($post->content, ["markdown"])->text;
             foreach ($users as $author) {
