@@ -12,6 +12,7 @@ use Teca\User\User;
 use Teca\Post\Post;
 use Teca\Post\PostType;
 use Teca\Tag\Tag;
+use Teca\Vote\Vote;
 
 class ThreadController implements ContainerInjectableInterface
 {
@@ -41,7 +42,7 @@ class ThreadController implements ContainerInjectableInterface
         foreach ($threads as $thread) {
             $id = $thread->author;
             $thread->answerCount = 0;
-            $thread->voteCount = 0;
+            $thread->score = $thread->score($this->di);
             $thread->tagValues = [];
             $thread->content = $filter->parse($thread->content, ["markdown"])->text;
             foreach ($users as $author) {
@@ -237,6 +238,47 @@ class ThreadController implements ContainerInjectableInterface
         return $page->render([
             "title" => "Ny fråga",
         ]);
+    }
+
+    public function voteAction($threadId, $postId, $value) : object
+    {
+        $user = new User();
+        $user->currentUser($this->di);
+
+        $vote = new Vote();
+        $vote->setDb($this->di->get("dbqb"));
+        $currentVote = $vote->findWhere("user = ? AND post = ?", [$user->id, $postId]);
+
+        if ($currentVote->value === null) {
+            $vote->value = $value;
+            $vote->user = $user->id;
+            $vote->post = $postId;
+        } else if ($currentVote->value === $value) {
+            $vote->value = 0;
+        } else {
+            $vote->value = $value;
+        }
+
+        $vote->save();
+
+        $this->di->get("response")->redirect("threads/view/" . $threadId);
+    }
+
+    public function markAction($threadId, $postId) : object
+    {
+        $user = new User();
+        $user->currentUser($this->di);
+
+        $post = new Post();
+        $post->setDb($this->di->get("dbqb"));
+        $answer = $post->findWhere("thread = ? AND id = ? AND type = ?", [$threadId, $postId, PostType::ANSWER]);
+
+        if ($answer->id) {
+            $answer->answer = true;
+            $answer->save();
+        }
+
+        $this->di->get("response")->redirect("threads/view/" . $threadId);
     }
 
     public function sortbyAction($threadId, $value) : object
