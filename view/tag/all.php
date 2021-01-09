@@ -7,7 +7,7 @@
     <?php foreach ($tags as $tag) : ?>
     <div class="tag">
         <div class="count"><?= $tag->useCount ?></div>
-        <a class="value" href="tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
+        <a class="value" href="tags/view/<?= $tag->id ?>"><?= $tag->value ?></a>
     </div>
     <?php endforeach; ?>
 </div>

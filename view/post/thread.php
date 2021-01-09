@@ -10,7 +10,7 @@ function comments($parent)
             <div class="comment">
                 <div class="right">
                     <span class="content"><?= $comment->content ?> - </span>
-                    <a class="name" href="user/view/<?= $comment->author ?>"><?= htmlentities($comment->authorName) ?></a>
+                    <a class="name" href="user/view/<?= $comment->author ?>"><?= $comment->authorName ?></a>
                     <span class="date"><?= date("H:i F j 'y", $comment->creation) ?></span>
                 </div>
             </div>
@@ -28,18 +28,18 @@ function comments($parent)
         </div>
     </div>
     <div class="right">
-        <a class="title" href="<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
+        <a class="title" href="<?= $thread->id ?>">Q: <?= $thread->title ?></a>
         <div class="content">
             <?= $thread->content ?>
         </div>
         <div class="tags">
             <?php foreach ($thread->tagValues as $tag) : ?>
-            <a class="tag" href="../../tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
+            <a class="tag" href="../../tags/view/<?= $tag->id ?>"><?= $tag->value ?></a>
             <?php endforeach; ?>
         </div>
         <div class="details">
             <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
-            <a class="name" href="../../user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
+            <a class="name" href="../../user/view/<?= $thread->author ?>"><?= $thread->authorName ?></a>
             <img class="avatar" src="<?= $thread->authorAvatar ?>">
         </div>
         <?= comments($thread) ?>
@@ -54,7 +54,7 @@ function comments($parent)
             <div class="content"><?= $answer->content ?></div>
             <div class="details">
                 <div class="date"><?= date("H:i F j 'y", $answer->creation) ?></div>
-                <a class="name" href="../../user/view/<?= $answer->author ?>"><?= htmlentities($answer->authorName) ?></a>
+                <a class="name" href="../../user/view/<?= $answer->author ?>"><?= $answer->authorName ?></a>
                 <img class="avatar" src="<?= $answer->authorAvatar ?>">
             </div>
             <?= comments($answer) ?>

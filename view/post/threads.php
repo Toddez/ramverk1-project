@@ -21,17 +21,17 @@ if (isset($text)) { ?>
         </div>
         <div class="right">
             <div class="content">
-                <a class="title" href="<?= $prefix ?>threads/view/<?= $thread->id ?>">Q: <?= htmlentities($thread->title) ?></a>
+                <a class="title" href="<?= $prefix ?>threads/view/<?= $thread->id ?>">Q: <?= $thread->title ?></a>
                 <div class="snippet"><?= $thread->content ?></div>
             </div>
             <div class="details">
                 <div class="tags">
                     <?php foreach ($thread->tagValues as $tag) : ?>
-                    <a class="tag" href="<?= $prefix ?>tags/view/<?= $tag->id ?>"><?= htmlentities($tag->value) ?></a>
+                    <a class="tag" href="<?= $prefix ?>tags/view/<?= $tag->id ?>"><?= $tag->value ?></a>
                     <?php endforeach; ?>
                 </div>
                 <div class="date"><?= date("H:i F j 'y", $thread->creation) ?></div>
-                <a class="name" href="<?= $prefix ?>user/view/<?= $thread->author ?>"><?= htmlentities($thread->authorName) ?></a>
+                <a class="name" href="<?= $prefix ?>user/view/<?= $thread->author ?>"><?= $thread->authorName ?></a>
                 <img class="avatar" src="<?= $thread->authorAvatar ?>">
             </div>
         </div>
