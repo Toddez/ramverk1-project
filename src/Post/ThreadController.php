@@ -150,12 +150,15 @@ class ThreadController implements ContainerInjectableInterface
     {
         $filter = new TextFilter();
 
+        $session = $this->di->get("session");
+        $sortBy = $session->get("sortby", 'creation');
+
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
         $thread = $post->findWhere("id = ?", intval($threadId));
         $thread->comments = [];
         $thread->answerCount = 0;
-        $thread->voteCount = 0;
+        $thread->score = $thread->score($this->di);
         $thread->content = $filter->parse($thread->content, ["markdown"])->text;
 
         $tagIds = explode(",", $thread->tags);
@@ -173,16 +176,19 @@ class ThreadController implements ContainerInjectableInterface
         $thread->authorAvatar = $author->gravatar();
 
         $answersAndComments = $post->findAllWhere("thread = ?", intval($threadId));
-        $creationDates = array_column($answersAndComments, 'creation');
-        array_multisort($creationDates, SORT_ASC, $answersAndComments);
-
         $authors = array_unique(array_column($answersAndComments, 'author'));
         $users = $user->findAllWhere("id IN (?)", [$authors]);
+
+        foreach ($answersAndComments as $post) {
+            $post->score = $post->score($this->di);
+        }
+
+        $sortColumn = array_column($answersAndComments, 'creation');
+        array_multisort($sortColumn, SORT_ASC, $answersAndComments);
 
         $answers = [];
         foreach ($answersAndComments as $post) {
             $id = $post->author;
-            $post->voteCount = 0;
             $post->content = $filter->parse($post->content, ["markdown"])->text;
             foreach ($users as $author) {
                 if (intval($author->id) === intval($id)) {
@@ -212,15 +218,31 @@ class ThreadController implements ContainerInjectableInterface
             }
         }
 
+        $sortColumn = array_column($answers, $sortBy);
+        array_multisort($sortColumn, $sortBy === 'score' ? SORT_DESC : SORT_ASC, $answers);
+
+        foreach ($answers as $answer) {
+            $sortColumn = array_column($answer->comments, $sortBy);
+            array_multisort($sortColumn, $sortBy === 'score' ? SORT_DESC : SORT_ASC, $answer->comments);
+        }
+
         $page = $this->di->get("page");
 
         $page->add("post/thread", [
             "thread" => $thread,
             "answers" => $answers,
+            "sort" => $sortBy,
         ]);
 
         return $page->render([
             "title" => "Ny fråga",
         ]);
+    }
+
+    public function sortbyAction($threadId, $value) : object
+    {
+        $session = $this->di->get("session");
+        $session->set("sortby", $value);
+        $this->di->get("response")->redirect("threads/view/" . $threadId);
     }
 }
