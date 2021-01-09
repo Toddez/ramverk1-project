@@ -279,9 +279,13 @@ class ThreadController implements ContainerInjectableInterface
 
         $post = new Post();
         $post->setDb($this->di->get("dbqb"));
+        $thread = $post->findWhere("id = ? AND type = ?", [$threadId, PostType::THREAD]);
+
+        $post = new Post();
+        $post->setDb($this->di->get("dbqb"));
         $answer = $post->findWhere("thread = ? AND id = ? AND type = ?", [$threadId, $postId, PostType::ANSWER]);
 
-        if ($answer->author !== $user->id) {
+        if ($thread->author !== $user->id) {
             return $this->di->get("response")->redirect("threads/view/" . $threadId);
         }
 
