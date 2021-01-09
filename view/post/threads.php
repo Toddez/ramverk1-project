@@ -18,6 +18,10 @@ if (isset($text)) { ?>
                 <span class="number"><?= $thread->answerCount ?></span>
                 <span>svar</span>
             </div>
+            <div class="score">
+                <span class="number"><?= $thread->score ?></span>
+                <span>poäng</span>
+            </div>
         </div>
         <div class="right">
             <div class="content">
