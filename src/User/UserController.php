@@ -109,7 +109,7 @@ class UserController implements ContainerInjectableInterface
         foreach (array_merge($threads, $answeredThreads) as $thread) {
             $id = $thread->author;
             $thread->answerCount = 0;
-            $thread->voteCount = 0;
+            $thread->score = $thread->score($this->di);
             $thread->tagValues = [];
             $thread->content = $filter->parse($thread->content, ["markdown"])->text;
             foreach ($users as $author) {
@@ -135,7 +135,12 @@ class UserController implements ContainerInjectableInterface
         $creationDates = array_column($threads, 'creation');
         array_multisort($creationDates, SORT_DESC, $threads);
 
+        $user = new user();
+        $user->setDb($this->di->get("dbqb"));
+        $user = $user->findWhere("id = ?", [$userId]);
+
         $page->add("user/threads", [
+            "user" => $user,
             "threads" => $threads,
             "answeredThreads" => $answeredThreads,
             "prefix" => "../../",
