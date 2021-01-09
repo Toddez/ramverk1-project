@@ -48,16 +48,11 @@ class UserController implements ContainerInjectableInterface
         $posts = $post->findAll();
 
         foreach ($users as $user) {
-            $user->authorCount = 0;
-            foreach ($posts as $post) {
-                if ($user->id === $post->author) {
-                    $user->authorCount++;
-                }
-            }
+            $user->sortScore = $user->score($this->di);
         }
 
-        $authorCount = array_column($users, 'authorCount');
-        array_multisort($authorCount, SORT_DESC, $users);
+        $scoreColumn = array_column($users, 'sortScore');
+        array_multisort($scoreColumn, SORT_DESC, $users);
 
         return $users;
     }
