@@ -106,4 +106,25 @@ class ThreadControllerTest extends TestCase
         $this->assertContains("<div class=\"thread inspect", $body);
         $this->assertContains("<a class=\"addAnswer", $body);
     }
+
+    public function testVoteAction()
+    {
+        $res = $this->controller->voteAction($this->thread->id, $this->thread->id, 1);
+        $this->assertInstanceOf("\Anax\Response\Response", $res);
+    }
+
+    public function testMarkAction()
+    {
+        $res = $this->controller->markAction($this->thread->id, $this->thread->id);
+        $this->assertInstanceOf("\Anax\Response\Response", $res);
+    }
+
+    public function testSortbyAction()
+    {
+        $res = $this->controller->sortbyAction($this->thread->id, 'test');
+        $this->assertInstanceOf("\Anax\Response\Response", $res);
+
+        $session = $this->di->get("session");
+        $this->assertEquals($session->get("sortby"), 'test');
+    }
 }
