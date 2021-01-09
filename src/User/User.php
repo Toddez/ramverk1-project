@@ -3,6 +3,9 @@
 namespace Teca\User;
 
 use Anax\DatabaseActiveRecord\ActiveRecordModel;
+use Teca\Post\Post;
+use Teca\Post\PostType;
+use Teca\Vote\Vote;
 
 class User extends ActiveRecordModel
 {
@@ -72,5 +75,55 @@ class User extends ActiveRecordModel
             $this->setDb($di->get("dbqb"));
             $this->find("name", $session->get("user"));
         }
+    }
+
+    public function score($di) : int
+    {
+        $post = new Post();
+        $post->setDb($di->get("dbqb"));
+        $posts = $post->findAllWhere("author = ?", [$this->id]);
+
+        $score = 0;
+        foreach ($posts as $post) {
+            $score += 1 + $post->score($di);
+        }
+
+        return $score;
+    }
+
+    public function numThreads($di) : int
+    {
+        $post = new Post();
+        $post->setDb($di->get("dbqb"));
+        $posts = $post->findAllWhere("author = ? AND type = ?", [$this->id, PostType::THREAD]);
+
+        return sizeof($posts);
+    }
+
+    public function numAnswers($di) : int
+    {
+        $post = new Post();
+        $post->setDb($di->get("dbqb"));
+        $posts = $post->findAllWhere("author = ? AND type = ?", [$this->id, PostType::ANSWER]);
+
+        return sizeof($posts);
+    }
+
+    public function numComments($di) : int
+    {
+        $post = new Post();
+        $post->setDb($di->get("dbqb"));
+        $posts = $post->findAllWhere("author = ? AND type = ?", [$this->id, PostType::COMMENT]);
+
+        return sizeof($posts);
+    }
+
+    public function numVotes($di) : int
+    {
+        $vote = new Vote();
+        $vote->setDb($di->get("dbqb"));
+        $votes = $vote->findAllWhere("user = ? AND value IN (?)", [$this->id, [1, -1]]);
+
+        return sizeof($votes);
     }
 }
