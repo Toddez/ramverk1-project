@@ -1,6 +1,7 @@
 <?php
 $user = new \Teca\User\User();
 $authorized = $user->authorized($di);
+$showMark = $user->id === $thread->author && $thread->hasAnswer($di) === false;
 
 function comments($parent)
 {
@@ -8,6 +9,13 @@ function comments($parent)
         <div class="comments">
             <?php foreach ($parent->comments as $comment) : ?>
             <div class="comment">
+                <div class="left">
+                    <div class="votes">
+                        <a class="upvote" href="../vote/<?= $comment->thread ?>/<?= $comment->id ?>/1">^</a>
+                        <span class="number"><?= $comment->score ?></span>
+                        <a class="downvote" href="../vote/<?= $comment->thread ?>/<?= $comment->id ?>/-1">v</a>
+                    </div>
+                </div>
                 <div class="right">
                     <span class="content"><?= $comment->content ?> - </span>
                     <a class="name" href="user/view/<?= $comment->author ?>"><?= $comment->authorName ?></a>
@@ -19,12 +27,16 @@ function comments($parent)
     <?php
 }
 ?>
-
 <div class="thread inspect">
     <div class="left">
         <div class="answers">
             <span class="number"><?= $thread->answerCount ?></span>
             <span>svar</span>
+        </div>
+        <div class="score">
+            <a class="upvote" href="../vote/<?= $thread->id ?>/<?= $thread->id ?>/1">^</a>
+            <span class="number"><?= $thread->score ?></span>
+            <a class="downvote" href="../vote/<?= $thread->id ?>/<?= $thread->id ?>/-1">v</a>
         </div>
     </div>
     <div class="right">
@@ -58,10 +70,18 @@ function comments($parent)
 
 <div class="answers">
     <?php foreach ($answers as $answer) : ?>
-    <div class="answer thread inspect">
+    <div class="answer thread inspect <?= $answer->answer ? 'marked' : '' ?>">
+        <div class="left">
+            <div class="score">
+                <a class="upvote" href="../vote/<?= $thread->id ?>/<?= $answer->id ?>/1">^</a>
+                <span class="number"><?= $answer->score ?></span>
+                <a class="downvote" href="../vote/<?= $thread->id ?>/<?= $answer->id ?>/-1">v</a>
+            </div>
+        </div>
         <div class="right">
             <div class="content"><?= $answer->content ?></div>
             <div class="details">
+                <?php if ($showMark) { ?><a class="mark" href="../mark/<?= $thread->id ?>/<?= $answer->id ?>">Markera som svar</a> <?php } ?>
                 <div class="date"><?= date("H:i F j 'y", $answer->creation) ?></div>
                 <a class="name" href="../../user/view/<?= $answer->author ?>"><?= $answer->authorName ?></a>
                 <img class="avatar" src="<?= $answer->authorAvatar ?>">
