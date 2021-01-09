@@ -28,3 +28,12 @@ CREATE TABLE Tag (
     "id" INTEGER PRIMARY KEY NOT NULL,
     "value" TEXT NOT NULL
 );
+
+-- Table Vote
+DROP TABLE IF EXISTS Vote;
+CREATE TABLE Vote (
+    "id" INTEGER PRIMARY KEY NOT NULL,
+    "post" INTEGER NOT NULL,
+    "user" INTEGER NOT NULL,
+    "value" INTEGER NOT NULL
+);
