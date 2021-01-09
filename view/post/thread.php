@@ -11,9 +11,9 @@ function comments($parent)
             <div class="comment">
                 <div class="left">
                     <div class="votes">
-                        <a class="upvote" href="../vote/<?= $comment->thread ?>/<?= $comment->id ?>/1">^</a>
+                        <a class="upvote" href="../vote/<?= $comment->thread ?>/<?= $comment->id ?>/1">&#x25B2;</a>
                         <span class="number"><?= $comment->score ?></span>
-                        <a class="downvote" href="../vote/<?= $comment->thread ?>/<?= $comment->id ?>/-1">v</a>
+                        <a class="downvote" href="../vote/<?= $comment->thread ?>/<?= $comment->id ?>/-1">&#x25BC;</a>
                     </div>
                 </div>
                 <div class="right">
@@ -34,9 +34,9 @@ function comments($parent)
             <span>svar</span>
         </div>
         <div class="score">
-            <a class="upvote" href="../vote/<?= $thread->id ?>/<?= $thread->id ?>/1">^</a>
+            <a class="upvote" href="../vote/<?= $thread->id ?>/<?= $thread->id ?>/1">&#x25B2;</a>
             <span class="number"><?= $thread->score ?></span>
-            <a class="downvote" href="../vote/<?= $thread->id ?>/<?= $thread->id ?>/-1">v</a>
+            <a class="downvote" href="../vote/<?= $thread->id ?>/<?= $thread->id ?>/-1">&#x25BC;</a>
         </div>
     </div>
     <div class="right">
@@ -73,9 +73,9 @@ function comments($parent)
     <div class="answer thread inspect <?= $answer->answer ? 'marked' : '' ?>">
         <div class="left">
             <div class="score">
-                <a class="upvote" href="../vote/<?= $thread->id ?>/<?= $answer->id ?>/1">^</a>
+                <a class="upvote" href="../vote/<?= $thread->id ?>/<?= $answer->id ?>/1">&#x25B2;</a>
                 <span class="number"><?= $answer->score ?></span>
-                <a class="downvote" href="../vote/<?= $thread->id ?>/<?= $answer->id ?>/-1">v</a>
+                <a class="downvote" href="../vote/<?= $thread->id ?>/<?= $answer->id ?>/-1">&#x25BC;</a>
             </div>
         </div>
         <div class="right">
