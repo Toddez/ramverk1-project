@@ -81,7 +81,9 @@ function comments($parent)
         <div class="right">
             <div class="content"><?= $answer->content ?></div>
             <div class="details">
-                <?php if ($showMark) { ?><a class="mark" href="../mark/<?= $thread->id ?>/<?= $answer->id ?>">Markera som svar</a> <?php } ?>
+                <?php if ($showMark) { ?>
+                <a class="mark" href="../mark/<?= $thread->id ?>/<?= $answer->id ?>">Markera som svar</a>
+                <?php } ?>
                 <div class="date"><?= date("H:i F j 'y", $answer->creation) ?></div>
                 <a class="name" href="../../user/view/<?= $answer->author ?>"><?= $answer->authorName ?></a>
                 <img class="avatar" src="<?= $answer->authorAvatar ?>">
