@@ -3,7 +3,7 @@ $user = new \Teca\User\User();
 $authorized = $user->authorized($di);
 
 if (isset($text)) { ?>
-    <div><?= htmlentities($text) ?></div>
+    <div><?= $text ?></div>
 <?php } ?>
 
 <div class="threads">
